@@ -3,9 +3,8 @@
 
 	import { makeProcessImgRequest } from "./imgOpsAPI";
 
-	let originalImgPath: string = "/favicon.png";
-
-	let displayImgPath: string = "/favicon.png";
+	let originalImgPath = "/favicon.png";
+	let displayImgPath = "/favicon.png";
 
 	const onFileSelected = (e) => {
 		Resizer.imageFileResizer(
@@ -36,6 +35,20 @@
 	const convertToBinary = async () => {
 		displayImgPath = await makeProcessImgRequest("binary", [displayImgPath]);
 	};
+
+	const NOToperation = async () => {
+		displayImgPath = await makeProcessImgRequest("not", [displayImgPath]);
+	};
+
+	let divideFactor = 2;
+	const divideByFactor = async () => {
+		displayImgPath = await makeProcessImgRequest(`divide/${divideFactor}`, [displayImgPath]);
+	};
+
+	let multiplyFactor = 2;
+	const multiplyByFactor = async () => {
+		displayImgPath = await makeProcessImgRequest(`multiply/${multiplyFactor}`, [displayImgPath]);
+	};
 </script>
 
 <div id="app">
@@ -43,9 +56,19 @@
 
 	<input type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
-	<input type="button" value="undo" on:click={undo} />
+	<input type="button" value="Original" on:click={undo} />
+
 	<input type="button" value="RGB -> 8bit" on:click={convertToGrayscale} />
+
 	<input type="button" value="RGB -> 1bit" on:click={convertToBinary} />
+
+	<input type="button" value="NOT" on:click={NOToperation} />
+
+	<input type="number" step="0.01" bind:value={divideFactor} />
+	<input type="button" value="Dvidir" on:click={divideByFactor} />
+
+	<input type="number" step="0.01" bind:value={multiplyFactor} />
+	<input type="button" value="Multiplicar" on:click={multiplyByFactor} />
 </div>
 
 <style>
