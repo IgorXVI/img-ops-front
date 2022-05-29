@@ -85,8 +85,6 @@
 		padding: 1rem;
 	}
 	.imgDisplay {
-		height: 500px;
-		width: 500px;
 		display: flex;
 		padding: 1rem;
 	}
