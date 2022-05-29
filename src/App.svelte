@@ -1,56 +1,51 @@
 <script lang="ts">
-	let inputImage;
-	let inputImagePath: string;
+	import Resizer from "react-image-file-resizer";
 
-	let resultImagePath: string;
+	import { makeProcessImgRequest } from "./imgOpsAPI";
+
+	let originalImgPath: string = "/favicon.png";
+
+	let displayImgPath: string = "/favicon.png";
 
 	const onFileSelected = (e) => {
-		inputImage = e.target.files[0];
+		Resizer.imageFileResizer(
+			e.target.files[0],
+			500,
+			500,
+			"JPEG",
+			100,
+			0,
+			(resizedFile: Blob) => {
+				const resizedFilePath = URL.createObjectURL(resizedFile);
 
-		let reader = new FileReader();
+				originalImgPath = resizedFilePath;
+				displayImgPath = resizedFilePath;
+			},
+			"blob"
+		);
+	};
 
-		reader.readAsDataURL(inputImage);
-
-		reader.onload = (e) => {
-			inputImagePath = String(e.target.result);
-		};
+	const undo = () => {
+		displayImgPath = originalImgPath;
 	};
 
 	const convertToGrayscale = async () => {
-		try {
-			const formData = new FormData();
+		displayImgPath = await makeProcessImgRequest("grayscale", [displayImgPath]);
+	};
 
-			formData.append("img", inputImage);
-
-			const res = await fetch("http://localhost:9090/process-img/grayscale", {
-				method: "POST",
-				body: formData,
-			});
-
-			const fullResponse = await res.blob();
-
-			if (res.status !== 200) {
-				const responseText = await fullResponse.text();
-
-				alert(`API Request error: ${responseText}`);
-
-				return;
-			}
-
-			resultImagePath = URL.createObjectURL(fullResponse);
-		} catch (error) {
-			alert(`API Request error: ${error.message}`);
-		}
+	const convertToBinary = async () => {
+		displayImgPath = await makeProcessImgRequest("binary", [displayImgPath]);
 	};
 </script>
 
 <div id="app">
-	<img class="imageDisplay" src={inputImagePath} alt="" />
-	<img class="imageDisplay" src={resultImagePath} alt="" />
+	<img class="imgDisplay" src={displayImgPath} alt="" />
 
-	<input type="file" accept=".jpg, .jpeg, .png .tif .bmp" on:change={(e) => onFileSelected(e)} />
+	<input type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
+	<input type="button" value="undo" on:click={undo} />
 	<input type="button" value="RGB -> 8bit" on:click={convertToGrayscale} />
+	<input type="button" value="RGB -> 1bit" on:click={convertToBinary} />
 </div>
 
 <style>
@@ -58,8 +53,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		flex-flow: column;
 	}
-	.imageDisplay {
+	.imgDisplay {
 		height: 500px;
 		width: 500px;
 		display: flex;
