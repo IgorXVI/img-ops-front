@@ -39,21 +39,21 @@
 <div id="main">
     <img class="imgDisplay" src={displayImgPath} alt="" />
 
-    <input type="button" value="AND" on:click={and} />
+    <input class="loneButton" type="button" value="AND" on:click={and} />
 
-    <input type="button" value="OR" on:click={or} />
+    <input class="loneButton" type="button" value="OR" on:click={or} />
 
-    <input type="button" value="XOR" on:click={xor} />
+    <input class="loneButton" type="button" value="XOR" on:click={xor} />
 
-    <input type="button" value="Adicionar" on:click={add} />
+    <input class="loneButton" type="button" value="Adicionar" on:click={add} />
 
-    <input type="button" value="Subtrair" on:click={subtract} />
+    <input class="loneButton" type="button" value="Subtrair" on:click={subtract} />
 
-    <input type="button" value="Média" on:click={avg} />
+    <input class="loneButton" type="button" value="Média" on:click={avg} />
 
     <div class="inputRow">
-        <input type="number" step="0.01" bind:value={blendFactor} />
-        <input type="button" value="Blending" on:click={blend} />
+        <input class="inputColumn" type="number" step="0.01" bind:value={blendFactor} />
+        <input class="inputColumn" type="button" value="Blending" on:click={blend} />
     </div>
 </div>
 
@@ -68,9 +68,20 @@
     .imgDisplay {
         display: flex;
         padding: 1rem;
+        height: 500px;
+        width: 500px;
     }
     .inputRow {
         display: flex;
         flex-flow: row-reverse;
+        align-items: center;
+        justify-content: center;
+        width: 250px;
+    }
+    .inputColumn {
+        width: 50%;
+    }
+    .loneButton {
+        width: 125px;
     }
 </style>

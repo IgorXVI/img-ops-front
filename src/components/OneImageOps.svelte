@@ -55,24 +55,24 @@
 <div id="main">
 	<img class="imgDisplay" src={displayImgPath} alt="" />
 
-	<input type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
+	<input class="imgFileInput" type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
-	<input type="button" value="Original" on:click={undo} />
+	<input class="loneButton" type="button" value="Original" on:click={undo} />
 
-	<input type="button" value="RGB -> 8bit" on:click={toGrayscale} />
+	<input class="loneButton" type="button" value="RGB -> 8bit" on:click={toGrayscale} />
 
-	<input type="button" value="RGB -> 1bit" on:click={toBinary} />
+	<input class="loneButton" type="button" value="RGB -> 1bit" on:click={toBinary} />
 
-	<input type="button" value="NOT" on:click={not} />
+	<input class="loneButton" type="button" value="NOT" on:click={not} />
 
 	<div class="inputRow">
-		<input type="number" step="0.01" bind:value={divideFactor} />
-		<input type="button" value="Dvidir" on:click={divide} />
+		<input class="inputColumn" type="number" step="0.01" bind:value={divideFactor} />
+		<input class="inputColumn" type="button" value="Dvidir" on:click={divide} />
 	</div>
 
 	<div class="inputRow">
-		<input type="number" step="0.01" bind:value={multiplyFactor} />
-		<input type="button" value="Multiplicar" on:click={multiply} />
+		<input class="inputColumn" type="number" step="0.01" bind:value={multiplyFactor} />
+		<input class="inputColumn" type="button" value="Multiplicar" on:click={multiply} />
 	</div>
 </div>
 
@@ -87,9 +87,23 @@
 	.imgDisplay {
 		display: flex;
 		padding: 1rem;
+		height: 500px;
+		width: 500px;
 	}
 	.inputRow {
 		display: flex;
 		flex-flow: row-reverse;
+		align-items: center;
+		justify-content: center;
+		width: 250px;
+	}
+	.inputColumn {
+		width: 50%;
+	}
+	.imgFileInput {
+		width: 325px;
+	}
+	.loneButton {
+		width: 125px;
 	}
 </style>
