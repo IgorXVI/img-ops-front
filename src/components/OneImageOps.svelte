@@ -3,6 +3,8 @@
 
 	import { makeProcessImgRequest } from "../modules/imgOpsAPI";
 
+	export let title: string;
+
 	let originalImgPath = "/favicon.png";
 
 	export let displayImgPath = "/favicon.png";
@@ -53,6 +55,8 @@
 </script>
 
 <div id="main">
+	<h1>{title}</h1>
+
 	<img class="imgDisplay" src={displayImgPath} alt="" />
 
 	<input class="imgFileInput" type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
@@ -83,6 +87,7 @@
 		justify-content: center;
 		flex-flow: column;
 		padding: 1rem;
+		border-right-style: dotted;
 	}
 	.imgDisplay {
 		display: flex;

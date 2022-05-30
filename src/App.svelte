@@ -7,8 +7,8 @@
 </script>
 
 <div id="main">
-	<OneImageOps bind:displayImgPath={img1Path} />
-	<OneImageOps bind:displayImgPath={img2Path} />
+	<OneImageOps bind:displayImgPath={img1Path} title="Imagem A" />
+	<OneImageOps bind:displayImgPath={img2Path} title="Imagem B" />
 	<TwoImageOps {img1Path} {img2Path} />
 </div>
 

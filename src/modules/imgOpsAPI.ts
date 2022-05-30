@@ -12,7 +12,7 @@ const loadImgFromPath = async (path: string): Promise<Blob> => {
     }
 }
 
-export const makeProcessImgRequest = async (path: string, imgFilePaths: string[]) => {
+export const makeProcessImgRequest = async (path: string, imgFilePaths: string[]): Promise<string> => {
     try {
         const formData = new FormData()
 

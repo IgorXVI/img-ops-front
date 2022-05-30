@@ -37,6 +37,8 @@
 </script>
 
 <div id="main">
+    <h1>Imagem Resultante</h1>
+
     <img class="imgDisplay" src={displayImgPath} alt="" />
 
     <input class="loneButton" type="button" value="AND" on:click={and} />
