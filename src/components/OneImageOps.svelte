@@ -9,7 +9,10 @@
 
 	export let displayImgPath = "/favicon.png";
 
+	let toggleCompareHistograms = false;
+
 	const onFileSelected = (e) => {
+		toggleCompareHistograms = false;
 		Resizer.imageFileResizer(
 			e.target.files[0],
 			500,
@@ -28,36 +31,42 @@
 	};
 
 	const undo = () => {
+		toggleCompareHistograms = false;
 		displayImgPath = originalImgPath;
 	};
 
 	const toGrayscale = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("grayscale", [displayImgPath]);
 	};
 
 	const toBinary = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("binary", [displayImgPath]);
 	};
 
 	const not = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("not", [displayImgPath]);
 	};
 
 	let divideFactor = 2;
 	const divide = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest(`divide/${divideFactor}`, [displayImgPath]);
 	};
 
 	let multiplyFactor = 2;
 	const multiply = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest(`multiply/${multiplyFactor}`, [displayImgPath]);
 	};
 
 	const equalizeHistogram = async () => {
+		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
 	};
 
-	let toggleCompareHistograms = false;
 	let originalHistogramPath = "";
 	let displayHistogramPath = "";
 	const compareHistograms = async () => {
