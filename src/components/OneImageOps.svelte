@@ -52,12 +52,42 @@
 	const multiply = async () => {
 		displayImgPath = await makeProcessImgRequest(`multiply/${multiplyFactor}`, [displayImgPath]);
 	};
+
+	const equalizeHistogram = async () => {
+		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
+	};
+
+	let toggleCompareHistograms = false;
+	let originalHistogramPath = "";
+	let displayHistogramPath = "";
+	const compareHistograms = async () => {
+		if (toggleCompareHistograms === false) {
+			toggleCompareHistograms = true;
+			const results = await Promise.all([makeProcessImgRequest("histogram", [originalImgPath]), makeProcessImgRequest("histogram", [displayImgPath])]);
+			originalHistogramPath = results[0];
+			displayHistogramPath = results[1];
+		} else {
+			toggleCompareHistograms = false;
+		}
+	};
 </script>
 
 <div id="main">
 	<h1>{title}</h1>
 
-	<img class="imgDisplay" src={displayImgPath} alt="" />
+	{#if toggleCompareHistograms}
+		<div class="imgRow">
+			<img class="imgEqualize" src={originalImgPath} alt="" />
+			<img class="imgEqualizeTicc" src={originalHistogramPath} alt="" />
+		</div>
+
+		<div class="imgRow">
+			<img class="imgEqualize" src={displayImgPath} alt="" />
+			<img class="imgEqualizeTicc" src={displayHistogramPath} alt="" />
+		</div>
+	{:else}
+		<img class="imgDisplay" src={displayImgPath} alt="" />
+	{/if}
 
 	<input class="imgFileInput" type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
@@ -78,6 +108,10 @@
 		<input class="inputColumn" type="number" step="0.01" bind:value={multiplyFactor} />
 		<input class="inputColumn" type="button" value="Multiplicar" on:click={multiply} />
 	</div>
+
+	<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
+
+	<input class="loneButton" type="button" value="Comparar Histogramas" on:click={compareHistograms} />
 </div>
 
 <style>
@@ -95,6 +129,19 @@
 		height: 500px;
 		width: 500px;
 	}
+
+	.imgEqualize {
+		display: flex;
+		padding: 1rem;
+		height: 250px;
+		width: 250px;
+	}
+	.imgEqualizeTicc {
+		display: flex;
+		padding: 1rem;
+		height: 250px;
+		width: 500px;
+	}
 	.inputRow {
 		display: flex;
 		flex-flow: row-reverse;
@@ -109,6 +156,10 @@
 		width: 325px;
 	}
 	.loneButton {
-		width: 125px;
+		width: 190px;
+	}
+	.imgRow {
+		display: flex;
+		flex-flow: row;
 	}
 </style>
