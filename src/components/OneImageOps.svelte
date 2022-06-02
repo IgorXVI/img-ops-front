@@ -140,7 +140,7 @@
 		display: flex;
 		padding: 1rem;
 		height: 250px;
-		width: 500px;
+		width: 800px;
 	}
 	.inputRow {
 		display: flex;
