@@ -9,10 +9,7 @@
 
 	export let displayImgPath = "/favicon.png";
 
-	let toggleCompareHistograms = false;
-
 	const onFileSelected = (e) => {
-		toggleCompareHistograms = false;
 		Resizer.imageFileResizer(
 			e.target.files[0],
 			500,
@@ -31,72 +28,46 @@
 	};
 
 	const undo = () => {
-		toggleCompareHistograms = false;
 		displayImgPath = originalImgPath;
 	};
 
 	const toGrayscale = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("grayscale", [displayImgPath]);
 	};
 
 	const toBinary = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("binary", [displayImgPath]);
 	};
 
 	const not = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("not", [displayImgPath]);
 	};
 
 	let divideFactor = 2;
 	const divide = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest(`divide/${divideFactor}`, [displayImgPath]);
 	};
 
 	let multiplyFactor = 2;
 	const multiply = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest(`multiply/${multiplyFactor}`, [displayImgPath]);
 	};
 
 	const equalizeHistogram = async () => {
-		toggleCompareHistograms = false;
 		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
 	};
 
-	let originalHistogramPath = "";
-	let displayHistogramPath = "";
+	let lastHistPath = "X";
 	const compareHistograms = async () => {
-		if (toggleCompareHistograms === false) {
-			toggleCompareHistograms = true;
-			const results = await Promise.all([makeProcessImgRequest("histogram", [originalImgPath]), makeProcessImgRequest("histogram", [displayImgPath])]);
-			originalHistogramPath = results[0];
-			displayHistogramPath = results[1];
-		} else {
-			toggleCompareHistograms = false;
-		}
+		displayImgPath = await makeProcessImgRequest("equalize-and-compare-histograms", [displayImgPath]);
+		lastHistPath = displayImgPath;
 	};
 </script>
 
 <div id="main">
 	<h1>{title}</h1>
 
-	{#if toggleCompareHistograms}
-		<div class="imgRow">
-			<img class="imgEqualize" src={originalImgPath} alt="" />
-			<img class="imgEqualizeTicc" src={originalHistogramPath} alt="" />
-		</div>
-
-		<div class="imgRow">
-			<img class="imgEqualize" src={displayImgPath} alt="" />
-			<img class="imgEqualizeTicc" src={displayHistogramPath} alt="" />
-		</div>
-	{:else}
-		<img class="imgDisplay" src={displayImgPath} alt="" />
-	{/if}
+	<img class={lastHistPath === displayImgPath ? "imgDisplay imgTicc" : "imgDisplay"} src={displayImgPath} alt="" />
 
 	<input class="imgFileInput" type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
@@ -120,7 +91,7 @@
 
 	<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
 
-	<input class="loneButton" type="button" value="Comparar Histogramas" on:click={compareHistograms} />
+	<input class="loneButton" type="button" value="Equalize & Compare" on:click={compareHistograms} />
 </div>
 
 <style>
@@ -138,18 +109,8 @@
 		height: 500px;
 		width: 500px;
 	}
-
-	.imgEqualize {
-		display: flex;
-		padding: 1rem;
-		height: 250px;
-		width: 250px;
-	}
-	.imgEqualizeTicc {
-		display: flex;
-		padding: 1rem;
-		height: 250px;
-		width: 800px;
+	.imgTicc {
+		width: 1250px;
 	}
 	.inputRow {
 		display: flex;
@@ -166,9 +127,5 @@
 	}
 	.loneButton {
 		width: 190px;
-	}
-	.imgRow {
-		display: flex;
-		flex-flow: row;
 	}
 </style>
