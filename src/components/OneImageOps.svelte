@@ -110,6 +110,7 @@
 		width: 500px;
 	}
 	.imgTicc {
+		height: 725px;
 		width: 1250px;
 	}
 	.inputRow {
