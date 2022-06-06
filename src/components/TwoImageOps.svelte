@@ -34,12 +34,18 @@
     const blend = async () => {
         displayImgPath = await makeProcessImgRequest(`blend/${blendFactor}`, [img1Path, img2Path]);
     };
+
+    let lastHistPath = "X";
+	const compareHistograms = async () => {
+		displayImgPath = await makeProcessImgRequest("compare-histograms", [img1Path, img2Path]);
+		lastHistPath = displayImgPath;
+	};
 </script>
 
 <div id="main">
     <h1>Imagem Resultante</h1>
 
-    <img class="imgDisplay" src={displayImgPath} alt="" />
+    <img class={lastHistPath === displayImgPath ? "imgDisplay imgTicc" : "imgDisplay"} src={displayImgPath} alt="" />
 
     <input class="loneButton" type="button" value="AND" on:click={and} />
 
@@ -57,6 +63,8 @@
         <input class="inputColumn" type="number" step="0.01" bind:value={blendFactor} />
         <input class="inputColumn" type="button" value="Blending" on:click={blend} />
     </div>
+
+    <input class="loneButton" type="button" value="Comparar histogramas" on:click={compareHistograms} />
 </div>
 
 <style>
@@ -73,6 +81,10 @@
         height: 500px;
         width: 500px;
     }
+    .imgTicc {
+		height: 750px;
+		width: 1500px;
+	}
     .inputRow {
         display: flex;
         flex-flow: row-reverse;
@@ -84,6 +96,6 @@
         width: 50%;
     }
     .loneButton {
-        width: 125px;
+        width: 200px;
     }
 </style>

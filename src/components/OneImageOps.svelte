@@ -56,18 +56,12 @@
 	const equalizeHistogram = async () => {
 		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
 	};
-
-	let lastHistPath = "X";
-	const compareHistograms = async () => {
-		displayImgPath = await makeProcessImgRequest("equalize-and-compare-histograms", [displayImgPath]);
-		lastHistPath = displayImgPath;
-	};
 </script>
 
 <div id="main">
 	<h1>{title}</h1>
 
-	<img class={lastHistPath === displayImgPath ? "imgDisplay imgTicc" : "imgDisplay"} src={displayImgPath} alt="" />
+	<img class="imgDisplay" src={displayImgPath} alt="" />
 
 	<input class="imgFileInput" type="file" accept=".jpg, .jpeg, .png, .bmp" on:change={(e) => onFileSelected(e)} />
 
@@ -90,8 +84,6 @@
 	</div>
 
 	<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
-
-	<input class="loneButton" type="button" value="Equalize & Compare" on:click={compareHistograms} />
 </div>
 
 <style>
@@ -109,10 +101,6 @@
 		height: 500px;
 		width: 500px;
 	}
-	.imgTicc {
-		height: 725px;
-		width: 1250px;
-	}
 	.inputRow {
 		display: flex;
 		flex-flow: row-reverse;
@@ -127,6 +115,6 @@
 		width: 325px;
 	}
 	.loneButton {
-		width: 190px;
+		width: 200px;
 	}
 </style>
