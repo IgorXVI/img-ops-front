@@ -56,6 +56,18 @@
 	const equalizeHistogram = async () => {
 		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
 	};
+
+	const filterMax = async () => {
+		displayImgPath = await makeProcessImgRequest("filter/max", [displayImgPath]);
+	};
+
+	const filterMin = async () => {
+		displayImgPath = await makeProcessImgRequest("filter/min", [displayImgPath]);
+	};
+
+	const filterAvg = async () => {
+		displayImgPath = await makeProcessImgRequest("filter/avg", [displayImgPath]);
+	};
 </script>
 
 <div id="main">
@@ -84,6 +96,12 @@
 	</div>
 
 	<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
+
+	<input class="loneButton" type="button" value="Filtro Max" on:click={filterMax} />
+
+	<input class="loneButton" type="button" value="Filtro Min" on:click={filterMin} />
+
+	<input class="loneButton" type="button" value="Filtro Média" on:click={filterAvg} />
 </div>
 
 <style>
