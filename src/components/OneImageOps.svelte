@@ -68,6 +68,15 @@
 	const filterAvg = async () => {
 		displayImgPath = await makeProcessImgRequest("filter/avg", [displayImgPath]);
 	};
+
+	const filterMean = async () => {
+		displayImgPath = await makeProcessImgRequest("filter/mean", [displayImgPath]);
+	};
+
+	let filterOrderIndex = 0;
+	const filterOrder = async () => {
+		displayImgPath = await makeProcessImgRequest(`filter/order/${filterOrderIndex}`, [displayImgPath]);
+	};
 </script>
 
 <div id="main">
@@ -102,6 +111,13 @@
 	<input class="loneButton" type="button" value="Filtro Min" on:click={filterMin} />
 
 	<input class="loneButton" type="button" value="Filtro Média" on:click={filterAvg} />
+
+	<input class="loneButton" type="button" value="Filtro Mediana" on:click={filterMean} />
+
+	<div class="inputRow">
+		<input class="inputColumn" type="number" step="0.01" bind:value={filterOrderIndex} />
+		<input class="inputColumn" type="button" value="Filtro Ordem" on:click={filterOrder} />
+	</div>
 </div>
 
 <style>
