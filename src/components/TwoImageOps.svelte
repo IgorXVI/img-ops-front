@@ -36,10 +36,10 @@
     };
 
     let lastHistPath = "X";
-	const compareHistograms = async () => {
-		displayImgPath = await makeProcessImgRequest("compare-histograms", [img1Path, img2Path]);
-		lastHistPath = displayImgPath;
-	};
+    const compareHistograms = async () => {
+        displayImgPath = await makeProcessImgRequest("compare-histograms", [img1Path, img2Path]);
+        lastHistPath = displayImgPath;
+    };
 </script>
 
 <div id="main">
@@ -47,27 +47,42 @@
 
     <img class={lastHistPath === displayImgPath ? "imgDisplay imgTicc" : "imgDisplay"} src={displayImgPath} alt="" />
 
-    <input class="loneButton" type="button" value="AND" on:click={and} />
+    <div class="mainRow">
+        <div class="mainColumn">
+            <input class="loneButton" type="button" value="AND" on:click={and} />
 
-    <input class="loneButton" type="button" value="OR" on:click={or} />
+            <input class="loneButton" type="button" value="OR" on:click={or} />
 
-    <input class="loneButton" type="button" value="XOR" on:click={xor} />
+            <input class="loneButton" type="button" value="XOR" on:click={xor} />
 
-    <input class="loneButton" type="button" value="Adicionar" on:click={add} />
+            <div class="inputRow">
+                <input class="inputColumn" type="number" step="0.01" bind:value={blendFactor} />
+                <input class="inputColumn" type="button" value="Blending" on:click={blend} />
+            </div>
+        </div>
 
-    <input class="loneButton" type="button" value="Subtrair" on:click={subtract} />
+        <div class="mainColumn">
+            <input class="loneButton" type="button" value="Adicionar" on:click={add} />
 
-    <input class="loneButton" type="button" value="Média" on:click={avg} />
+            <input class="loneButton" type="button" value="Subtrair" on:click={subtract} />
 
-    <div class="inputRow">
-        <input class="inputColumn" type="number" step="0.01" bind:value={blendFactor} />
-        <input class="inputColumn" type="button" value="Blending" on:click={blend} />
+            <input class="loneButton" type="button" value="Média" on:click={avg} />
+
+            <input class="loneButton" type="button" value="Comparar histogramas" on:click={compareHistograms} />
+        </div>
     </div>
-
-    <input class="loneButton" type="button" value="Comparar histogramas" on:click={compareHistograms} />
 </div>
 
 <style>
+    .mainRow {
+        display: flex;
+        flex-flow: row;
+    }
+    .mainColumn {
+        display: flex;
+        flex-flow: column;
+        padding: 1rem;
+    }
     #main {
         display: flex;
         align-items: center;
@@ -82,9 +97,9 @@
         width: 500px;
     }
     .imgTicc {
-		height: 750px;
-		width: 1500px;
-	}
+        height: 750px;
+        width: 1500px;
+    }
     .inputRow {
         display: flex;
         flex-flow: row-reverse;

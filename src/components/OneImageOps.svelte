@@ -77,6 +77,10 @@
 	const filterOrder = async () => {
 		displayImgPath = await makeProcessImgRequest(`filter/order/${filterOrderIndex}`, [displayImgPath]);
 	};
+
+	const filterConservativeSmoothing = async () => {
+		displayImgPath = await makeProcessImgRequest("filter/conservative-smoothing", [displayImgPath]);
+	};
 </script>
 
 <div id="main">
@@ -88,39 +92,56 @@
 
 	<input class="loneButton" type="button" value="Original" on:click={undo} />
 
-	<input class="loneButton" type="button" value="RGB -> 8bit" on:click={toGrayscale} />
+	<div class="mainRow">
+		<div class="mainColumn">
+			<input class="loneButton" type="button" value="RGB -> 8bit" on:click={toGrayscale} />
 
-	<input class="loneButton" type="button" value="RGB -> 1bit" on:click={toBinary} />
+			<input class="loneButton" type="button" value="RGB -> 1bit" on:click={toBinary} />
 
-	<input class="loneButton" type="button" value="NOT" on:click={not} />
+			<input class="loneButton" type="button" value="NOT" on:click={not} />
 
-	<div class="inputRow">
-		<input class="inputColumn" type="number" step="0.01" bind:value={divideFactor} />
-		<input class="inputColumn" type="button" value="Dvidir" on:click={divide} />
-	</div>
+			<div class="inputRow">
+				<input class="inputColumn" type="number" step="0.01" bind:value={divideFactor} />
+				<input class="inputColumn" type="button" value="Dvidir" on:click={divide} />
+			</div>
 
-	<div class="inputRow">
-		<input class="inputColumn" type="number" step="0.01" bind:value={multiplyFactor} />
-		<input class="inputColumn" type="button" value="Multiplicar" on:click={multiply} />
-	</div>
+			<div class="inputRow">
+				<input class="inputColumn" type="number" step="0.01" bind:value={multiplyFactor} />
+				<input class="inputColumn" type="button" value="Multiplicar" on:click={multiply} />
+			</div>
 
-	<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
+			<input class="loneButton" type="button" value="Equalize" on:click={equalizeHistogram} />
+		</div>
 
-	<input class="loneButton" type="button" value="Filtro Max" on:click={filterMax} />
+		<div class="mainColumn">
+			<input class="loneButton" type="button" value="Filtro Max" on:click={filterMax} />
 
-	<input class="loneButton" type="button" value="Filtro Min" on:click={filterMin} />
+			<input class="loneButton" type="button" value="Filtro Min" on:click={filterMin} />
 
-	<input class="loneButton" type="button" value="Filtro Média" on:click={filterAvg} />
+			<input class="loneButton" type="button" value="Filtro Média" on:click={filterAvg} />
 
-	<input class="loneButton" type="button" value="Filtro Mediana" on:click={filterMean} />
+			<input class="loneButton" type="button" value="Filtro Mediana" on:click={filterMean} />
 
-	<div class="inputRow">
-		<input class="inputColumn" type="number" step="0.01" bind:value={filterOrderIndex} />
-		<input class="inputColumn" type="button" value="Filtro Ordem" on:click={filterOrder} />
+			<div class="inputRow">
+				<input class="inputColumn" type="number" step="0.01" bind:value={filterOrderIndex} />
+				<input class="inputColumn" type="button" value="Filtro Ordem" on:click={filterOrder} />
+			</div>
+
+			<input class="loneButton" type="button" value="Filtro Suav Conservativa" on:click={filterConservativeSmoothing} />
+		</div>
 	</div>
 </div>
 
 <style>
+	.mainRow {
+		display: flex;
+		flex-flow: row;
+	}
+	.mainColumn {
+		display: flex;
+		flex-flow: column;
+		padding: 1rem;
+	}
 	#main {
 		display: flex;
 		align-items: center;
@@ -135,6 +156,7 @@
 		height: 500px;
 		width: 500px;
 	}
+
 	.inputRow {
 		display: flex;
 		flex-flow: row-reverse;
