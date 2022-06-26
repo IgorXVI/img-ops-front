@@ -162,7 +162,7 @@
 					<option value="5">5x5</option>
 					<option value="7">7x7</option>
 				</select>
-				<input class="inputColumn" type="number" step="0.01" bind:value={filterOrderIndex} />
+				<input class="inputColumn" type="number" step="1" bind:value={filterOrderIndex} />
 				<input class="inputColumn" type="button" value="Filtro Ordem" on:click={filterOrder} />
 			</div>
 
