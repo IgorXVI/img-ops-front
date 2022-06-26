@@ -57,29 +57,35 @@
 		displayImgPath = await makeProcessImgRequest("equalize-histogram", [displayImgPath]);
 	};
 
+	let filterMaxMaskSize = 3;
 	const filterMax = async () => {
-		displayImgPath = await makeProcessImgRequest("filter/max", [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/max/${filterMaxMaskSize}`, [displayImgPath]);
 	};
 
+	let filterMinMaskSize = 3;
 	const filterMin = async () => {
-		displayImgPath = await makeProcessImgRequest("filter/min", [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/min/${filterMinMaskSize}`, [displayImgPath]);
 	};
 
+	let filterAvgMaskSize = 3;
 	const filterAvg = async () => {
-		displayImgPath = await makeProcessImgRequest("filter/avg", [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/avg/${filterAvgMaskSize}`, [displayImgPath]);
 	};
 
+	let filterMeanMaskSize = 3;
 	const filterMean = async () => {
-		displayImgPath = await makeProcessImgRequest("filter/mean", [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/mean/${filterMeanMaskSize}`, [displayImgPath]);
 	};
 
+	let filterOrderMaskSize = 3;
 	let filterOrderIndex = 0;
 	const filterOrder = async () => {
-		displayImgPath = await makeProcessImgRequest(`filter/order/${filterOrderIndex}`, [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/order/${filterMaxMaskSize}/${filterOrderMaskSize}`, [displayImgPath]);
 	};
 
-	const filterConservativeSmoothing = async () => {
-		displayImgPath = await makeProcessImgRequest("filter/conservative-smoothing", [displayImgPath]);
+	let filterConSmthMaskSize = 3;
+	const filterConSmth = async () => {
+		displayImgPath = await makeProcessImgRequest(`filter/conservative-smoothing/${filterConSmthMaskSize}`, [displayImgPath]);
 	};
 </script>
 
@@ -114,20 +120,60 @@
 		</div>
 
 		<div class="mainColumn">
-			<input class="loneButton" type="button" value="Filtro Max" on:click={filterMax} />
-
-			<input class="loneButton" type="button" value="Filtro Min" on:click={filterMin} />
-
-			<input class="loneButton" type="button" value="Filtro Média" on:click={filterAvg} />
-
-			<input class="loneButton" type="button" value="Filtro Mediana" on:click={filterMean} />
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterMaxMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="button" value="Filtro Max" on:click={filterMax} />
+			</div>
 
 			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterMinMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="button" value="Filtro Min" on:click={filterMin} />
+			</div>
+
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterAvgMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="button" value="Filtro Média" on:click={filterAvg} />
+			</div>
+
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterMeanMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="button" value="Filtro Mediana" on:click={filterMean} />
+			</div>
+
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterOrderMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
 				<input class="inputColumn" type="number" step="0.01" bind:value={filterOrderIndex} />
 				<input class="inputColumn" type="button" value="Filtro Ordem" on:click={filterOrder} />
 			</div>
 
-			<input class="loneButton" type="button" value="Filtro Suav Conservativa" on:click={filterConservativeSmoothing} />
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterConSmthMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="button" value="Filtro Suav Con" on:click={filterConSmth} />
+			</div>
 		</div>
 	</div>
 </div>
