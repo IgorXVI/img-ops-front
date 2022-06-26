@@ -80,7 +80,7 @@
 	let filterOrderMaskSize = 3;
 	let filterOrderIndex = 0;
 	const filterOrder = async () => {
-		displayImgPath = await makeProcessImgRequest(`filter/order/${filterMaxMaskSize}/${filterOrderMaskSize}`, [displayImgPath]);
+		displayImgPath = await makeProcessImgRequest(`filter/order/${filterOrderMaskSize}/${filterOrderIndex}`, [displayImgPath]);
 	};
 
 	let filterConSmthMaskSize = 3;
