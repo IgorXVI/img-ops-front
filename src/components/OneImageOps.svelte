@@ -87,6 +87,12 @@
 	const filterConSmth = async () => {
 		displayImgPath = await makeProcessImgRequest(`filter/conservative-smoothing/${filterConSmthMaskSize}`, [displayImgPath]);
 	};
+
+	let filterGaussMaskSize = 3;
+	let filterGaussSigma = 1;
+	const filterGauss = async () => {
+		displayImgPath = await makeProcessImgRequest(`filter/gaussian/${filterGaussMaskSize}/${filterGaussSigma}`, [displayImgPath]);
+	};
 </script>
 
 <div id="main">
@@ -173,6 +179,16 @@
 					<option value="7">7x7</option>
 				</select>
 				<input class="inputColumn" type="button" value="Filtro Suav Con" on:click={filterConSmth} />
+			</div>
+
+			<div class="inputRow">
+				<select class="inputColumn" bind:value={filterGaussMaskSize}>
+					<option value="3">3x3</option>
+					<option value="5">5x5</option>
+					<option value="7">7x7</option>
+				</select>
+				<input class="inputColumn" type="number" step="1" bind:value={filterGaussSigma} />
+				<input class="inputColumn" type="button" value="Filtro Gauss" on:click={filterGauss} />
 			</div>
 		</div>
 	</div>
